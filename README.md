@@ -1,2 +1,2 @@
 # Emby-QBT
-Emby-QBT Script
+Use alternative speeds when a user is playing something on Emby
