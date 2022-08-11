@@ -8,13 +8,11 @@ $qbtaddress = $args[2]
 $username = $args[3]
 $password = $args[4]
 while (1 -eq 1) {
-
-
-Try { $result = Invoke-RestMethod -Uri "$embyaddress/emby/Sessions?api_key=$apikey" -Method 'GET' -ContentType "application/json" |  % {$_.NowPlayingItem} }
+Try { $result = Invoke-RestMethod -Uri "$embyaddress/emby/Sessions?api_key=$apikey" -Method 'GET' -ContentType "application/json" | % {$_.PlayState} | Where-Object -Property "CanSeek" | % {$_.IsPaused} }
              Catch { Write-Host "Couldnt connect to emby!"
                      Exit }
 
-if ($result -like "*Name*") {Write-host "String contains Name, slow rates enabled"
+ if ($result -clike "*False*") {Write-host "unpaused"
 # SET ALT SPEEDS
 $result = Invoke-Webrequest -Uri "$qbtaddress/api/v2/auth/login" -Method 'POST' -Body "username=$username&password=$password" -Headers @{'Referrer' = "$qbtaddress/"} |
         Select-Object -Expand RawContent 
