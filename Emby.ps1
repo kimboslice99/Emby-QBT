@@ -31,7 +31,7 @@ if ($dlstatus -eq 1) {Write-Host "alt"}
 
      Else {Write-Host "String does not contain name, fast rates enabled"
 # SET STD SPEEDS
-$result = Invoke-Webrequest -Uri "$qbtaddress/api/v2/auth/login" -Method 'POST' -Body "username=SERVER&password=Fuckoffm8" -Headers @{'Referrer' = "$qbtaddress/"} |
+$result = Invoke-Webrequest -Uri "$qbtaddress/api/v2/auth/login" -Method 'POST' -Body "username=$username&password=$password" -Headers @{'Referrer' = "$qbtaddress/"} |
         Select-Object -Expand RawContent 
 $logincookie = $result.tostring() -split "[`r`n]" | select-string "Set-Cookie" | % {$_ -replace '.*Set-Cookie: SID=|\;.*'}
 $session = [Microsoft.PowerShell.Commands.WebRequestSession]::new()
